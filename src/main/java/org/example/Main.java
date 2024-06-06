@@ -11,8 +11,10 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         StatusHandler statusHandler=new StatusHandler();
-        //Трудоемко но гибко можно было решить с меньшим кол-вом кода но и гибкости было бы меньше да
+        //Трудоемко но гибко можно было решить с меньшим кол-вом кода но и гибкости было бы меньше
         // В текущем решении можно доопределить любое кол-во статусов, то как они будут отображаться в отчете и по каким признакам их узнать
+        // Статус определен в классе Status, StatusHandler управляет множеством статусов и возвращает в HashMapAnalyzer подходящие
+        // статусы
         statusHandler.addStatus("delete", "исчезли следующие страницы:", new Checkable() {
             @Override
             public Boolean checkOldAndNew(Map.Entry<String, String> entry, HashMap<String, String> newMap) {
