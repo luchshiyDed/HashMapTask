@@ -11,14 +11,14 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         StatusHandler statusHandler=new StatusHandler();
-        //Трудоемко но гибко можно было решить с меньшим кол-вом кода но и гибкости было бы меньше
+        //Трудоемко но гибко можно было решить с меньшим кол-вом кода но и гибкости было бы меньше да и задача менее интересной
         statusHandler.addStatus("delete", "исчезли следующие страницы:", new Checkable() {
             @Override
             public Boolean checkOldAndNew(Map.Entry<String, String> entry, HashMap<String, String> newMap) {
                 return !newMap.containsKey(entry.getKey());
             }
         });
-        statusHandler.addStatus("create", "Появились следующие новые страницы:", new Checkable() {
+        statusHandler.addStatus("create", "появились следующие новые страницы:", new Checkable() {
 
             @Override
             public Boolean checkNewAndOld(Map.Entry<String, String> entry, HashMap<String, String> oldMap) {
