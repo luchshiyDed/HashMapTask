@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Report {
-    public static String createReport(String name, String fatherName, HashMap<Status, ArrayList<String>> info){
+    public static String createReport(String name, String fatherName, HashMap<String, ArrayList<String>> info){
 
         StringBuilder builder = new StringBuilder("Здравствуйте, дорогая "+name+" "+fatherName+" секретаря\n" +
                 "За последние сутки во вверенных Вам сайтах произошли следующие изменения:\n");
-        for (Map.Entry<Status,ArrayList<String>> entry:info.entrySet()){
-            builder.append(entry.getKey().inReport);
+        for (Map.Entry<String,ArrayList<String>> entry:info.entrySet()){
+            builder.append(entry.getKey());
+            builder.append(" следующие страницы:");
             boolean first=true;
             for (String e: entry.getValue()){
                 if(first){
@@ -23,9 +24,10 @@ public class Report {
             }
             builder.append("\n");
         }
-        builder.append("С уважением,\n" +
-                "автоматизированная система\n" +
-                "мониторинга.");
+        builder.append("""
+                С уважением,
+                автоматизированная система
+                мониторинга.""");
         return builder.toString();
     }
 }

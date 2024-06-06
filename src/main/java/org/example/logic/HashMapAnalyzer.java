@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HashMapAnalyzer {
-    private StatusHandler statusHandler;
-    public HashMapAnalyzer(StatusHandler statusHandler){
-        this.statusHandler=statusHandler;
-    }
-    public HashMap<Status, ArrayList<String>> findDifference(HashMap<String,String> oldMap, HashMap<String,String> newMap){
-        HashMap<Status,ArrayList<String>> result= new HashMap<>();
+    public HashMap<String, ArrayList<String>> findDifference(HashMap<String,String> oldMap, HashMap<String,String> newMap){
+        HashMap<String,ArrayList<String>> result= new HashMap<>();
         for(Map.Entry<String,String> entry:oldMap.entrySet()){
-            Status status=statusHandler.getStatusByOldValAndNewMap(entry,newMap);
+            String status=null;
+            if(!newMap.containsKey(entry.getKey()))
+                status="исчезли";
+            else if (!newMap.get(entry.getKey()).equals(entry.getValue())) {
+                status="изменились";
+            }
             if(status==null)
                 continue;
             if(!result.containsKey(status)){
@@ -21,7 +22,9 @@ public class HashMapAnalyzer {
             result.get(status).add(entry.getKey());
         }
         for(Map.Entry<String,String> entry:newMap.entrySet()){
-            Status status=statusHandler.getStatusByNewValAndOldMap(entry,oldMap);
+            String status=null;
+            if(!oldMap.containsKey(entry.getKey()))
+                status="появились";
             if(status==null)
                 continue;
             if(!result.containsKey(status)){

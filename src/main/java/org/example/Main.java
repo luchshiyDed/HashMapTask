@@ -1,43 +1,13 @@
 package org.example;
 
-import org.example.logic.Checkable;
 import org.example.logic.HashMapAnalyzer;
 import org.example.logic.Report;
-import org.example.logic.StatusHandler;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        StatusHandler statusHandler=new StatusHandler();
-        //Трудоемко но гибко можно было решить с меньшим кол-вом кода но и гибкости было бы меньше
-        // В текущем решении можно доопределить любое кол-во статусов, то как они будут отображаться в отчете и по каким признакам их узнать
-        // Статус определен в классе Status, StatusHandler управляет множеством статусов и возвращает в HashMapAnalyzer подходящие
-        // статусы
-        statusHandler.addStatus("delete", "исчезли следующие страницы:", new Checkable() {
-            @Override
-            public Boolean checkOldAndNew(Map.Entry<String, String> entry, HashMap<String, String> newMap) {
-                return !newMap.containsKey(entry.getKey());
-            }
-        });
-        statusHandler.addStatus("create", "появились следующие новые страницы:", new Checkable() {
-
-            @Override
-            public Boolean checkNewAndOld(Map.Entry<String, String> entry, HashMap<String, String> oldMap) {
-                return !oldMap.containsKey(entry.getKey());
-            }
-        });
-        statusHandler.addStatus("change", "изменились следующие страницы:", new Checkable() {
-            @Override
-            public Boolean checkOldAndNew(Map.Entry<String, String> entry, HashMap<String, String> newMap) {
-                if(newMap.containsKey(entry.getKey())){
-                    return !newMap.get(entry.getKey()).equals(entry.getValue());
-                }
-                return false;
-            }
-        });
-        HashMapAnalyzer analyzer=new HashMapAnalyzer(statusHandler);
+        HashMapAnalyzer analyzer=new HashMapAnalyzer();
         HashMap<String,String> oldMap=new HashMap<>();
         oldMap.put("/1","1");
         oldMap.put("/2","2");
